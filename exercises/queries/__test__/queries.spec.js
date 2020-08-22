@@ -14,14 +14,14 @@ const createContent = (length, fill = 'b') => new Array(length).fill(fill).join(
 describe('queries', () => {
   describe('postByTitle', () => {
     test('get post by title', async () => {
-      const title = 'cat bedtime'
+      const title = 'cat bedtimeee'
       const post = await Post.create({
         title,
         author: mongoose.Types.ObjectId(),
         content: createContent(50),
         contentLength: 50
       })
-      
+
       const match = await postByTitle(title)
       expect(match.id).toBe(post.id)
     })
@@ -46,9 +46,9 @@ describe('queries', () => {
       const author = mongoose.Types.ObjectId()
 
       const posts = await Post.create([
-        {title: 'Super Duper', author, content: createContent(1000), contentLength: 1000},
-        {title: 'Amazing', author, content: createContent(100), contentLength: 100},
-        {title: 'Other', author, content: createContent(800), contentLength: 800}
+        { title: 'Super Duper', author, content: createContent(1000), contentLength: 1000 },
+        { title: 'Amazing', author, content: createContent(100), contentLength: 100 },
+        { title: 'Other', author, content: createContent(800), contentLength: 800 }
       ])
 
       const matches = await postByContentLength(1000, 100)
@@ -83,12 +83,12 @@ describe('queries', () => {
     test('only selects fields given', async () => {
       const author = mongoose.Types.ObjectId()
       await Post.create([
-        {title: 'learn things', content: createContent(100), contentLength: 100, author},
-        {title: 'lean more things', content: createContent(100), contentLength: 100, author},
-        {title: 'lean more things++', content: createContent(100), contentLength: 100, author}
+        { title: 'learn things', content: createContent(100), contentLength: 100, author },
+        { title: 'lean more things', content: createContent(100), contentLength: 100, author },
+        { title: 'lean more things++', content: createContent(100), contentLength: 100, author }
       ])
 
-      const matches = await allPostsSlim({title: 1, content: 1})
+      const matches = await allPostsSlim({ title: 1, content: 1 })
       expect(matches).toHaveLength(3)
       matches.forEach(match => {
         const post = match.toJSON()
@@ -106,7 +106,7 @@ describe('queries', () => {
         content: createContent(100),
         contentLength: 100,
         similarPosts: [mongoose.Types.ObjectId()]
-      }) 
+      })
 
       const updated = await addSimilarPosts(post.id, [
         mongoose.Types.ObjectId(),
